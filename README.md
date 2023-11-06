@@ -80,3 +80,25 @@ Lütfen aşşağıdaki yönergeleri takip ederek görevleri tamamlayın.
 3. Kodlarınızı olabildiğince temiz ve anlaşılır yazmaya özen gösterin.
 4. Kodlarınızı yazarken bildiğiniz en iyi yöntemler ile yazmaya çalışın.
 5. Görevlerden çok yazdığınız kodun önemli olduğunu unutmayın.
+
+## uygulamayı çalıştırmak için dikkat edilmesi gereken bazı noktalar
+1. şehirleri veritabanına yüklemeden önce ülke json'unu yükleyin
+2. ülkeleri ve şehirleri json yükleme komutu aşağıdaki gibidir
+```
+python manage.py load_json_data --model ulke --json-file ./path/to/countries.json
+```
+```
+python manage.py load_json_data --model sehir --json-file ./path/to/cities.json
+```
+3. to populate the search_text field, use this command
+```
+python manage.py generate_search_text
+```
+4. API'mızın URL uç noktası aşağıdaki gibidir
+   - `api/locations/search?query=istanbul` [GET]
+   - `api/locations/select/`[POST] konum seçmeye yönelik uç nokta, bu iki alanı içeren bir json gövdesinin gönderilmesini bekleyen bir gönderi  isteğidir:
+      1. id
+      2. model :  "model" alanı üç olası dizeden birini bekler, "country", "city", "airport"
+   - `api/locations/country-most-searched-cities?country_codes=TR,DE,KE` [GET]
+   - `api/locations/country-search-ratio?country_codes=TR,DE,KE` [GET]
+   - `api/locations/deselect/` [GET]
